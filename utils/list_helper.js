@@ -11,7 +11,6 @@ const totalLikes = (blogs) => {
 }
 
 const favouriteBlog = (blogs) => {
-
     if (blogs === undefined || blogs.length == 0) {
         return null
     }
@@ -29,6 +28,28 @@ const favouriteBlog = (blogs) => {
     return favourite
 }
 
+const mostBlogs = (blogs) => {
+    if (blogs === undefined || blogs.length == 0) {
+        return null
+    }
+
+    const store = {}
+    blogs.forEach((blog) => store[blog.author] ? store[blog.author] += 1 : store[blog.author] = 1)
+    mostBlogsAuthor = Object.keys(store).sort((a, b) => store[b] - store[a])[0]
+    return {author: mostBlogsAuthor, blogs: store[mostBlogsAuthor]}
+}
+
+const mostLikes = (blogs) => {
+    if (blogs === undefined || blogs.length == 0) {
+        return null
+    }
+
+    const store = {}
+    blogs.forEach((blog) => store[blog.author] ? store[blog.author] += blog.likes : store[blog.author] = blog.likes)
+    mostLikesAuthor = Object.keys(store).sort((a, b) => store[b] - store[a])[0]
+    return {author: mostLikesAuthor, likes: store[mostLikesAuthor]}
+}
+
 module.exports = {
-    dummy, totalLikes, favouriteBlog
+    dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes
 }
