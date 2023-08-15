@@ -12,7 +12,6 @@ describe('Blogs api', () => {
             title: "React patterns",
             author: "Michael Chan",
             url: "https://reactpatterns.com/",
-            likes: 7,
             __v: 0
         },
         {
@@ -24,6 +23,15 @@ describe('Blogs api', () => {
             __v: 0
         },
     ]
+
+    const blogToBeAdded = {
+        _id: "5a422aa71b54a845214d17f8",
+        title: "Blog added in test",
+        author: "Lauri Maila",
+        url: "http://google.fi",
+        likes: 100,
+        __v: 0
+    }
 
     beforeEach(async () => {
         await Blog.deleteMany({})
@@ -49,6 +57,29 @@ describe('Blogs api', () => {
         const response = await api.get('/api/blogs')
 
         expect(response.body).toHaveLength(initialBlogs.length)
+    })
+
+    test('a blog can be added', async () => {
+
+        await api
+            .post('/api/blogs')
+            .send(blogToBeAdded)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get('/api/blogs')
+
+        const blogTitles = response.body.map(r => r.title)
+
+        expect(response.body).toHaveLength(initialBlogs.length + 1)
+        expect(blogTitles).toContain(
+            "Blog added in test"
+        )
+    })
+
+    test('verify likes defaults to 0 if missing', async () => {
+        const response = await api.get(`/api/blogs/${initialBlogs[0]._id}`)
+        expect(response.body.likes).toBe(0)
     })
 
     test('a specific blog is within the returned blogs', async () => {
