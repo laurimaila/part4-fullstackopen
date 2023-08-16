@@ -77,6 +77,36 @@ describe('Blogs api', () => {
         )
     })
 
+    test('a blog with missing title or url can\'t be added', async () => {
+
+        const blogWithoutTitle = {
+            _id: "5a422aa71b54a845999d17f8",
+            author: "Lauri Maila",
+            url: "http://google.de",
+            likes: 69,
+            __v: 0
+        }
+
+        const blogWithoutUrl = {
+
+            _id: "5a422aa71b54a845999d17f8",
+            title: "Blog without url",
+            author: "Mauri Laila",
+            likes: 42,
+            __v: 0
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(blogWithoutTitle)
+            .expect(400)
+
+        await api
+            .post('/api/blogs')
+            .send(blogWithoutUrl)
+            .expect(400)
+    })
+
     test('verify likes defaults to 0 if missing', async () => {
         const response = await api.get(`/api/blogs/${initialBlogs[0]._id}`)
         expect(response.body.likes).toBe(0)
