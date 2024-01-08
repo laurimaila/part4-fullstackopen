@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const initialBlogs = [
     {
@@ -6,6 +7,7 @@ const initialBlogs = [
         title: 'React patterns',
         author: 'Michael Chan',
         url: 'https://reactpatterns.com/',
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -14,6 +16,7 @@ const initialBlogs = [
         author: 'Edsger W. Dijkstra',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
         likes: 5,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
 ]
@@ -24,6 +27,7 @@ const blogToBeAdded = {
     author: 'Lauri Maila',
     url: 'http://google.fi',
     likes: 100,
+    userId: '659b69ed8d0cf2c89bd0a9db',
     __v: 0
 }
 
@@ -34,6 +38,7 @@ const listWithOneBlog = [
         author: 'Edsger W. Dijkstra',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
         likes: 5,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     }
 ]
@@ -43,6 +48,7 @@ const blogWithoutTitle = {
     author: 'Lauri Maila',
     url: 'http://google.de',
     likes: 69,
+    userId: '659b69ed8d0cf2c89bd0a9db',
     __v: 0
 }
 
@@ -52,6 +58,7 @@ const blogWithoutUrl = {
     title: 'Blog without url',
     author: 'Mauri Laila',
     likes: 42,
+    userId: '659b69ed8d0cf2c89bd0a9db',
     __v: 0
 }
 
@@ -68,6 +75,11 @@ const blogsInDb = async () => {
     return blogs.map(blog => blog.toJSON())
 }
 
+const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(u => u.toJSON())
+}
+
 const listWithManyBlogs = [
     {
         _id: '5a422a851b54a676234d17f7',
@@ -75,6 +87,7 @@ const listWithManyBlogs = [
         author: 'Michael Chan',
         url: 'https://reactpatterns.com/',
         likes: 7,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -83,6 +96,7 @@ const listWithManyBlogs = [
         author: 'Edsger W. Dijkstra',
         url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
         likes: 5,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -91,6 +105,7 @@ const listWithManyBlogs = [
         author: 'Edsger W. Dijkstra',
         url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
         likes: 12,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -99,6 +114,7 @@ const listWithManyBlogs = [
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
         likes: 10,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -107,6 +123,7 @@ const listWithManyBlogs = [
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
         likes: 0,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     },
     {
@@ -115,10 +132,13 @@ const listWithManyBlogs = [
         author: 'Robert C. Martin',
         url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
         likes: 2,
+        userId: '659b69ed8d0cf2c89bd0a9db',
         __v: 0
     }
 ]
 
 module.exports = {
-    initialBlogs, nonExistingId, blogsInDb, blogWithoutTitle, blogWithoutUrl, listWithOneBlog, listWithManyBlogs, blogToBeAdded
+    initialBlogs, nonExistingId, blogsInDb,
+    blogWithoutTitle, blogWithoutUrl, listWithOneBlog,
+    listWithManyBlogs, blogToBeAdded, usersInDb
 }
